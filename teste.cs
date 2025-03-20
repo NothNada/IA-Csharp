@@ -49,12 +49,13 @@ class Program{
         bool fim = false;
 
         ConsoleKeyInfo tecla;
+        AlocarIndividuos();
 
         for(int i=0;i<POPULACAO;i++){
             Objetos[i] = new Obj(3,3);
         }
 
-        AlocarIndividuos();
+        
 
         while(!fim){
 
@@ -62,6 +63,7 @@ class Program{
             ControlarIndividuos();
 
             DesenharMapa();
+            //Console.Clear();
 
             tecla = Console.ReadKey();
             if(tecla.Key == ConsoleKey.Escape){
@@ -210,12 +212,15 @@ class Program{
                         } else {
                             Console.Write(" ");
                         }
+
+                        // for(int indice=0;indice<POPULACAO;indice++){
+                        //     if((Individuos[indice].y == i) && (Individuos[indice].y==j)){
+                        //         Console.Write("0");
+                        //     } else if((Objetos[indice].y == i) && (Objetos[indice].x==j)){
+                        //         Console.Write("x");
+                        //     }
+                        // } Serve para mostrar todos os individuos na tela
                     }
-
-                    
-
-                    
-                    
                     
                 }
             }
@@ -250,6 +255,27 @@ class Program{
                     Individuos[i].y -= SPEED;
                 }
 
+                if(Individuos[i].y == Objetos[i].y && Individuos[i].x == Objetos[i].x){
+                    Individuos[i].Fitness += 1;
+                    Objetos[i].x = rd.Next(1,LARGURA_JANELA-1);
+                    Objetos[i].y = rd.Next(1,ALTURA_JANELA-1);
+                }
+
+                // if(i == MelhorIndividuoI){
+                //     if(saida[0] > 0){
+                //     Console.WriteLine("Saida[0] x+");
+                // }
+                // if(saida[1] > 0){
+                //     Console.WriteLine("Saida[1] x-");
+                // }
+                // if(saida[2] > 0){
+                //     Console.WriteLine("Saida[2] y+");
+                // }
+                // if(saida[3] > 0){
+                //     Console.WriteLine("Saida[3] y-");
+                // }
+                // }
+
                 if(Individuos[i].x > LARGURA_JANELA){
                     Individuos[i].live = false;
                 }
@@ -270,7 +296,7 @@ class Program{
         double Maior = 0;
         int indice = 0;
         for(int i=0;i<POPULACAO;i++){
-            if(Individuos[i].Fitness > Maior){
+            if(Individuos[i].Fitness > Maior && Individuos[i].live){
                 Maior = Individuos[i].Fitness;
                 indice = i;
             }
@@ -280,6 +306,7 @@ class Program{
     }
 
     static void UpdateMelhor(){
+        
         MelhorIndividuo = getMelhor();
     }
 
