@@ -52,11 +52,12 @@ class Program{
             Objetos[i] = new Obj(3,3);
         }
 
-        InicializarIndividuos();
+        AlocarIndividuos();
 
         while(!fim){
 
-
+            UpdateMelhor();
+            ControlarIndividuos();
 
             DesenharMapa();
 
@@ -97,8 +98,8 @@ class Program{
         mortos = 0;
         fimGer = false;
 
-        for(int i=0; i<POPULACAO_TAMANHO; i++){
-            InicializarIndividuos(i, DNADaVez[i],LARGURA_JANELA/2,ALTURA_JANELA/2);
+        for(int i=0; i<POPULACAO; i++){
+            InicializarIndividuos(i, DnaDaVez[i],LARGURA_JANELA/2,ALTURA_JANELA/2);
         }
     }
 
@@ -113,18 +114,19 @@ class Program{
                     if((j==0) || (j==LARGURA_JANELA-1)){
                         Console.Write("#");
                     }else{
-                        Console.Write(" ");
-                    }
-
-                    for(int indice=0;indice<POPULACAO;indice++){
                         if((MelhorIndividuo.y == i) && (MelhorIndividuo.x==j)){
                             Console.Write("0");
-                        }
-
-                        if((Objetos[indice].y == i) && (Objetos[indice].x==j)){
+                        } else if((Objetos[MelhorIndividuoI].y == i) && (Objetos[MelhorIndividuoI].x==j)){
                             Console.Write("x");
+                        } else {
+                            Console.Write(" ");
                         }
                     }
+
+                    
+
+                    
+                    
                     
                 }
             }
