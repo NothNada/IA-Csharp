@@ -23,8 +23,8 @@ struct Obj{
 }
 
 class Program{
-    private static int LARGURA_JANELA = 10;
-    private static int ALTURA_JANELA = 10;
+    private static int LARGURA_JANELA = 20;
+    private static int ALTURA_JANELA = 20;
     private static readonly int SPEED = 1;
 
     private static readonly int NUMBER_OF_HIDDEN_LAYERS = 1;
@@ -226,7 +226,7 @@ class Program{
             }
             Console.WriteLine("");
         }
-
+        Console.WriteLine("Individuo "+MelhorIndividuoI );
     }
 
     static void ControlarIndividuos(){
