@@ -36,6 +36,7 @@ class Program{
     private static double[][] DnaDaVez = new double[POPULACAO][];
     private static IA[] Individuos = new IA[POPULACAO];
     private static IA MelhorIndividuo;
+    private static int MelhorIndividuoI;
     private static int mortos = 0;
 
     private static bool fimGer = false;
@@ -116,7 +117,7 @@ class Program{
                     }
 
                     for(int indice=0;indice<POPULACAO;indice++){
-                        if((Individuos[indice].y == i) && (Individuos[indice].x==j)){
+                        if((MelhorIndividuo.y == i) && (MelhorIndividuo.x==j)){
                             Console.Write("0");
                         }
 
@@ -170,7 +171,7 @@ class Program{
                 indice = i;
             }
         }
-
+        MelhorIndividuoI = indice;
         return Individuos[indice];
     }
 
