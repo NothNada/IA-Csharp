@@ -55,6 +55,7 @@ class Program{
             Objetos[i] = new Obj(3,3);
         }
 
+        int cache = 0;
         
 
         while(!fim){
@@ -63,44 +64,45 @@ class Program{
             ControlarIndividuos();
 
             DesenharMapa();
-            //Console.Clear();
 
-            tecla = Console.ReadKey();
-            if(tecla.Key == ConsoleKey.Escape){
-                fim = true;
-            }
-            if(tecla.KeyChar == 'c'){
+            if(cache == 0){
+                tecla = Console.ReadKey();
+                if(tecla.Key == ConsoleKey.Escape){
+                    fim = true;
+                }
+                if(tecla.KeyChar == 'c'){
+                    Console.Clear();
+                }
+                if(tecla.KeyChar == 'q'){
+                    fimGer = true;
+                }
+                if(tecla.KeyChar == 'p'){
+                    MelhorIndividuo.live = false;
+                }
+                if(tecla.KeyChar == 'd'){
+                    cache = 10;
+                }
+                if(tecla.KeyChar == 's'){
+                    MelhorIndividuo.rede.SalvarRede("MelhorIndividuo.bin");
+                    Console.WriteLine("Rede neural salva em MelhorIndividuo.bin");
+                }
+                if(tecla.KeyChar == 'a'){
+                    Individuos[MelhorIndividuoI].rede = RedeNeural.CarregarRede("MelhorIndividuo.bin");
+                    Console.WriteLine("Rede neural carregada com sucesso.");
+                }
+                if(tecla.KeyChar == 'l'){
+                    MelhorIndividuo.rede.ImprimirPesos();
+                }
+            }else{
+                cache --;
                 Console.Clear();
+                MelhorIndividuo = getMelhor();
             }
-            if(tecla.KeyChar == 'q'){
-                fimGer = true;
-            }
+            
 
             VerificaFimDePartida();
 
         }
-
-        // // Salvar a rede em um arquivo
-        // string caminhoArquivo = "rede_neural.bin";
-        // rede.SalvarRede(caminhoArquivo);
-        // Console.WriteLine("Rede neural salva em "+caminhoArquivo);
-
-        // // Carregar a rede de um arquivo
-        // RedeNeural redeCarregada = RedeNeural.CarregarRede(caminhoArquivo);
-        // Console.WriteLine("Rede neural carregada com sucesso.");
-        
-        // // Calcular a saída da rede carregada
-        // redeCarregada.CopiarParaEntrada(entradas);
-        // redeCarregada.CalcularSaida();
-        // double[] saidaCarregada = new double[redeCarregada.CamadaSaida.QuantidadeNeuronios];
-        // redeCarregada.CopiarDaSaida(saidaCarregada);
-
-        // // Imprimir a saída da rede carregada
-        // Console.WriteLine("Saída da rede carregada:");
-        // foreach (var valor in saidaCarregada)
-        // {
-        //     Console.WriteLine(valor);
-        // }
     }
 
     static void RandomMutations(){
@@ -226,7 +228,7 @@ class Program{
             }
             Console.WriteLine("");
         }
-        Console.WriteLine("Individuo "+MelhorIndividuoI );
+        Console.WriteLine("Individuo "+MelhorIndividuoI);
     }
 
     static void ControlarIndividuos(){
@@ -276,16 +278,16 @@ class Program{
                 // }
                 // }
 
-                if(Individuos[i].x > LARGURA_JANELA){
-                    Individuos[i].live = false;
-                }
-                if(Individuos[i].x < 0){
-                    Individuos[i].live = false;
-                }
-                if(Individuos[i].y > ALTURA_JANELA){
+                if(Individuos[i].y > LARGURA_JANELA){
                     Individuos[i].live = false;
                 }
                 if(Individuos[i].y < 0){
+                    Individuos[i].live = false;
+                }
+                if(Individuos[i].x > ALTURA_JANELA){
+                    Individuos[i].live = false;
+                }
+                if(Individuos[i].x < 0){
                     Individuos[i].live = false;
                 }
             }
@@ -306,8 +308,10 @@ class Program{
     }
 
     static void UpdateMelhor(){
-        
-        MelhorIndividuo = getMelhor();
+        if(!MelhorIndividuo.live){
+            MelhorIndividuo = getMelhor();
+        }
+        MelhorIndividuo = Individuos[MelhorIndividuoI];
     }
 
     static void InicializarIndividuos(int indice,double[] DNA,int x,int y){
