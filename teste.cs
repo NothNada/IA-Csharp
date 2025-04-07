@@ -23,7 +23,7 @@ struct Obj{
 }
 
 class Program{
-    private static int LARGURA_JANELA = 20;
+    private static int LARGURA_JANELA = 25;
     private static int ALTURA_JANELA = 20;
     private static readonly int SPEED = 1;
 
